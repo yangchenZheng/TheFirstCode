@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:gravity="center"
+            android:id="@+id/alarm_empty"
+            android:text="@string/empty_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ListView
+            android:id="@+id/id_lv_alarms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </FrameLayout>
+
+    <!--<android.support.design.widget.FloatingActionButton
+        android:id="@+id/id_fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_suggestions_add_red"
+        app:backgroundTint="@color/main_color"
+        app:borderWidth="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        />-->
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/id_fab_add"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        app:fab_addButtonColorNormal="@color/pinkred"
+        app:fab_addButtonColorPressed="@color/pink_pressed"
+        app:fab_addButtonPlusIconColor="@color/half_black"
+        android:layout_marginRight="16dp"
+        app:fab_labelsPosition="left"
+        app:fab_labelStyle="@style/menu_labels_style"
+        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content">
+
+<com.getbase.floatingactionbutton.FloatingActionButton
+    app:fab_icon="@drawable/ic_btn_speak_now"
+    app:fab_title="@string/voice"
+    app:fab_colorNormal="@color/white"
+    app:fab_colorPressed="@color/white_pressed"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+       <com.getbase.floatingactionbutton.FloatingActionButton
+           app:fab_title="编辑"
+           app:fab_icon="@drawable/ic_menu_edit"
+           app:fab_colorNormal="@color/white"
+           app:fab_colorPressed="@color/white_pressed"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</RelativeLayout>

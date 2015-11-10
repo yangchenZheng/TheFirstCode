@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CicrcularFloatingActionMenuLibrary/CicrcularFloatingActionMenuLibrary.iml" filepath="$PROJECT_DIR$/CicrcularFloatingActionMenuLibrary/CicrcularFloatingActionMenuLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialDesign/MaterialDesign.iml" filepath="$PROJECT_DIR$/MaterialDesign/MaterialDesign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialDesignDemo/MaterialDesignDemo.iml" filepath="$PROJECT_DIR$/MaterialDesignDemo/MaterialDesignDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialTabsModule/MaterialTabsModule.iml" filepath="$PROJECT_DIR$/MaterialTabsModule/MaterialTabsModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TheFirstCode.iml" filepath="$PROJECT_DIR$/TheFirstCode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/amnesia/amnesia.iml" filepath="$PROJECT_DIR$/amnesia/amnesia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-ui-master/android-ui-master.iml" filepath="$PROJECT_DIR$/android-ui-master/android-ui-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baiduSpeechRecognizerDemo/baiduSpeechRecognizerDemo.iml" filepath="$PROJECT_DIR$/baiduSpeechRecognizerDemo/baiduSpeechRecognizerDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imageloader/imageloader.iml" filepath="$PROJECT_DIR$/imageloader/imageloader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/materaListDemo/materaListDemo.iml" filepath="$PROJECT_DIR$/materaListDemo/materaListDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/materialList/materialList.iml" filepath="$PROJECT_DIR$/materialList/materialList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/networktest/networktest.iml" filepath="$PROJECT_DIR$/networktest/networktest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photo/photo.iml" filepath="$PROJECT_DIR$/photo/photo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slilingmenu/slilingmenu.iml" filepath="$PROJECT_DIR$/slilingmenu/slilingmenu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/voiceRecognitionDemo/voiceRecognitionDemo.iml" filepath="$PROJECT_DIR$/voiceRecognitionDemo/voiceRecognitionDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zhy_handler_imageloader02/zhy_handler_imageloader02.iml" filepath="$PROJECT_DIR$/zhy_handler_imageloader02/zhy_handler_imageloader02.iml" />
+    </modules>
+  </component>
+</project>
