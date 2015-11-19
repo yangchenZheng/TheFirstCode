@@ -91,5 +91,11 @@
     <string name="preview">预览(9)</string>
     <string name="voice">语音</string>
     <string name="noData">没有数据</string>
+    <string name="inputDate">请输入日期</string>
+    <string name="date">日期</string>
+    <string name="set_alarm_set_time">时间</string>
+    <string name="inputTime">请输入时间</string>
+    <string name="inputMemo">请输入提示信息</string>
+    <string name="请输入提示">请输入提示</string>
 
 </resources>

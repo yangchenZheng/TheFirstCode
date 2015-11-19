@@ -1,5 +1,6 @@
-include ':app', ':networktest', ':amnesia', ':slilingmenu', ':imageloader', ':', ':MaterialTabsModule', ':android-ui-master', ':library', ':MaterialDesignDemo', ':MaterialDesign', ':materialList', 'materaListDemo', ':samples', 'CicrcularFloatingActionMenuLibrary'
+include ':networktest', ':amnesia', ':slilingmenu', ':imageloader', ':', ':MaterialTabsModule', ':android-ui-master', ':library', ':MaterialDesignDemo', ':MaterialDesign', ':materialList', 'materaListDemo', ':samples', 'CicrcularFloatingActionMenuLibrary', 'MaterialEditText:library', 'MaterialEditText-master:sample'
 include ':baiduSpeechRecognizerDemo'
 include ':voiceRecognitionDemo'
 include ':photo'
 include ':zhy_handler_imageloader02'
+include ':rippleView'

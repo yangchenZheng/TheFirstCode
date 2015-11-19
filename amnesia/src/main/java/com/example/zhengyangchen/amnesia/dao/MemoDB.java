@@ -11,6 +11,9 @@ import com.example.zhengyangchen.amnesia.bean.Alarms;
 import com.example.zhengyangchen.amnesia.bean.Memo;
 import com.example.zhengyangchen.amnesia.contentProvider.AmnesiaProvider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * Created by zhengyangchen on 2015/10/25.
@@ -81,35 +84,36 @@ public class MemoDB {
         }
     }
 
-    /**
-     * 通过contentProvider保存alarms实例
-     * @param alarms
-     */
-    public void saveAlarmsByContentProvider(Alarms alarms) {
-        if (alarms != null) {
-            ContentValues values = new ContentValues();
-            values.put(Alarms.COLUMN_ID,alarms.getId());
-        }
-    }
-
-    public Cursor loadMemo() {
-//        List<Memo> memoList = new ArrayList<Memo>();
-        Cursor cursor = db.query(Memo.TABLE_NAME,null,null,null,null,null,null);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Memo memo = new Memo(cursor.getInt(cursor.getColumnIndex(Memo.CLUMN_ID)),
-//                        cursor.getString(cursor.getColumnIndex(Memo.CLUMN_MEMO_DESC)),
-//                        cursor.getLong(cursor.getColumnIndex(Memo.CLUMN_DATE_STR)),
-//                        cursor.getString(cursor.getColumnIndex(Memo.CLUMN_VOICE_URL)),
-//                        cursor.getString(cursor.getColumnIndex(Memo.CLUMN_PHOTO_URL)),
-//                        cursor.getString(cursor.getColumnIndex(Memo.CLUMN_AV_URL)),
-//                        cursor.getString(cursor.getColumnIndex(Memo.CLUMN_ADDRESS)));
-//                memoList.add(memo);
-//                Log.d("zyc", "LoadMemo run");
-//            } while (cursor.moveToNext());
-            return cursor;
+//    /**
+//     * 通过contentProvider保存alarms实例
+//     * @param alarms
+//     */
+//    public void saveAlarmsByContentProvider(Alarms alarms) {
+//        if (alarms != null) {
+//            ContentValues values = new ContentValues();
+//            values.put(Alarms.COLUMN_ID,alarms.getId());
 //        }
-//        return memoList;
+//    }
+
+    public List<Memo> loadMemo() {
+       List<Memo> memoList = new ArrayList<Memo>();
+        Cursor cursor = db.query(Memo.TABLE_NAME,null,null,null,null,null,null);
+        if (cursor.moveToFirst()) {
+            do {
+                Memo memo = new Memo(cursor.getInt(cursor.getColumnIndex(Memo.COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndex(Memo.COLUMN_MEMO_DESC)),
+                        cursor.getLong(cursor.getColumnIndex(Memo.COLUMN_DATE_STR)),
+                        cursor.getString(cursor.getColumnIndex(Memo.COLUMN_VOICE_URL)),
+                        cursor.getString(cursor.getColumnIndex(Memo.COLUMN_PHOTO_URL)),
+                        cursor.getString(cursor.getColumnIndex(Memo.COLUMN_AV_URL)),
+                        cursor.getString(cursor.getColumnIndex(Memo.COLUMN_ADDRESS)));
+                memoList.add(memo);
+                Log.d("zyc", "LoadMemo run");
+            } while (cursor.moveToNext());
+            cursor.close();
+            return memoList;
+        }
+        return memoList;
 
     }
 
@@ -120,4 +124,6 @@ public class MemoDB {
             context.getContentResolver().delete(uri, null, null);
         }
     }
+
+
 }

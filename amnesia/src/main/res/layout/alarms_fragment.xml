@@ -50,6 +50,7 @@
         android:layout_height="wrap_content">
 
 <com.getbase.floatingactionbutton.FloatingActionButton
+    android:id="@+id/id_speak_now"
     app:fab_icon="@drawable/ic_btn_speak_now"
     app:fab_title="@string/voice"
     app:fab_colorNormal="@color/white"
@@ -58,6 +59,7 @@
     android:layout_height="wrap_content" />
 
        <com.getbase.floatingactionbutton.FloatingActionButton
+           android:id="@+id/id_add_alarm"
            app:fab_title="编辑"
            app:fab_icon="@drawable/ic_menu_edit"
            app:fab_colorNormal="@color/white"

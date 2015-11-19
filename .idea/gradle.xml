@@ -3,9 +3,9 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="I:\Android\studio\gradle\gradle-2.4" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.4" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
@@ -13,10 +13,13 @@
             <option value="$PROJECT_DIR$/CicrcularFloatingActionMenuLibrary" />
             <option value="$PROJECT_DIR$/MaterialDesign" />
             <option value="$PROJECT_DIR$/MaterialDesignDemo" />
+            <option value="$PROJECT_DIR$/MaterialEditText" />
+            <option value="$PROJECT_DIR$/MaterialEditText-master" />
+            <option value="$PROJECT_DIR$/MaterialEditText-master/sample" />
+            <option value="$PROJECT_DIR$/MaterialEditText/library" />
             <option value="$PROJECT_DIR$/MaterialTabsModule" />
             <option value="$PROJECT_DIR$/amnesia" />
             <option value="$PROJECT_DIR$/android-ui-master" />
-            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baiduSpeechRecognizerDemo" />
             <option value="$PROJECT_DIR$/imageloader" />
             <option value="$PROJECT_DIR$/library" />
@@ -24,6 +27,7 @@
             <option value="$PROJECT_DIR$/materialList" />
             <option value="$PROJECT_DIR$/networktest" />
             <option value="$PROJECT_DIR$/photo" />
+            <option value="$PROJECT_DIR$/rippleView" />
             <option value="$PROJECT_DIR$/samples" />
             <option value="$PROJECT_DIR$/slilingmenu" />
             <option value="$PROJECT_DIR$/voiceRecognitionDemo" />

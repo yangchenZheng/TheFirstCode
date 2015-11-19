@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <EditText
+        android:id="@+id/take_photo_edt"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
         android:layout_margin="8dp"

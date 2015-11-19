@@ -2,7 +2,6 @@ package com.example.zhengyangchen.amnesia.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -19,11 +18,13 @@ import android.widget.Toast;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
 import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 import com.example.zhengyangchen.amnesia.R;
+import com.example.zhengyangchen.amnesia.activity.AddAlarmActivity;
 import com.example.zhengyangchen.amnesia.adapter.AlarmsCursorAdapter;
 import com.example.zhengyangchen.amnesia.bean.Alarms;
 import com.example.zhengyangchen.amnesia.contentProvider.AmnesiaProvider;
 import com.example.zhengyangchen.amnesia.dao.AlarmsDB;
 import com.example.zhengyangchen.amnesia.util.BaiduSpeech;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONArray;
@@ -54,6 +55,10 @@ public class AlarmsFragment extends Fragment {
      */
     private FloatingActionsMenu mFlButtonMenu;
     private View mView;
+    //添加提醒的按钮
+    private FloatingActionButton mAddAlarmFl;
+    //使用语音添加的按钮
+    private FloatingActionButton mSpeakAddAlarmFl;
 
 
     @Override
@@ -97,11 +102,21 @@ public class AlarmsFragment extends Fragment {
                 startBaiduSpeechAndSaveAlarm();
             }
         });
+        //设置添加添加闹钟按钮的点击事件
+        mAddAlarmFl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转到添加闹钟编辑页面
+                AddAlarmActivity.actionStart(getContext());
+            }
+        });
     }
 
 
     private void initView() {
         mFlButtonMenu = (FloatingActionsMenu) mView.findViewById(R.id.id_fab_add);
+        mAddAlarmFl = (FloatingActionButton) mView.findViewById(R.id.id_add_alarm);
+        mSpeakAddAlarmFl = (FloatingActionButton) mView.findViewById(R.id.id_speak_now);
         mListView = (ListView) mView.findViewById(R.id.id_lv_alarms);
         mListView.setEmptyView(mView.findViewById(R.id.alarm_empty));
         mCursorAdapter = new AlarmsCursorAdapter(getActivity(), null, false);

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dexafree.materialList.card.Action;
@@ -67,16 +68,31 @@ public class TextViewAction extends Action {
 
     @Override
     protected void onRender(@NonNull final View view, @NonNull final Card card) {
-        TextView textView = (TextView) view;
-        textView.setText(mActionText != null ? mActionText.toUpperCase(Locale.getDefault()) : null);
-        textView.setTextColor(mActionTextColor);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mListener != null) {
-                    mListener.onActionClicked(view, card);
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            textView.setText(mActionText != null ? mActionText.toUpperCase(Locale.getDefault()) : null);
+            textView.setTextColor(mActionTextColor);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onActionClicked(view, card);
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        if (view instanceof ImageView) {
+            ImageView imageView = (ImageView) view;
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onActionClicked(view,card);
+                    }
+                }
+            });
+        }
+
     }
 }

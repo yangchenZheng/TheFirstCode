@@ -119,6 +119,7 @@ public class MemoFragment extends Fragment {
                 switch (pos) {
                     case 1:
                         TakePhotoActivity.actionStart(getContext());
+                        getActivity().overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
                         break;
                     case 3:
                         AddMemoActivity.actionStart(getContext());

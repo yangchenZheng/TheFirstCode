@@ -134,6 +134,14 @@ public class MainActivity extends AppCompatActivity {
                                         .centerCrop();
                             }
                         })
+                        .addAction(R.id.image,new TextViewAction(mContext)
+                            .setListener(new OnActionClickListener() {
+                                @Override
+                                public void onActionClicked(View view, Card card) {
+                                    Toast.makeText(mContext,"你点击的图片",Toast.LENGTH_LONG).show();
+                                }
+                            })
+                        )
                         .endConfig()
                         .build();
             }
@@ -152,6 +160,14 @@ public class MainActivity extends AppCompatActivity {
                                 requestCreator.fit();
                             }
                         })
+                        .addAction(R.id.image,new TextViewAction(this)
+                                    .setListener(new OnActionClickListener() {
+                                        @Override
+                                        public void onActionClicked(View view, Card card) {
+                                            Toast.makeText(mContext,"你点击了狗",Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    )
                         .addAction(R.id.left_text_button, new TextViewAction(this)
                                 .setText("left")
                                 .setTextResourceColor(R.color.black_button)

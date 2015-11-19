@@ -23,7 +23,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
-
+                <include layout="@layout/supporting_text_16dp"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"/>
 
-                <include layout="@layout/supporting_text_16dp"/>
+
             </LinearLayout>
 
         </LinearLayout>

@@ -1,5 +1,11 @@
 package com.example.zhengyangchen.amnesia.util;
 
+import java.lang.reflect.Field;
+import java.util.LinkedList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -10,12 +16,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-
-import java.lang.reflect.Field;
-import java.util.LinkedList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 
 public class ImageLoader
 {
@@ -64,9 +64,9 @@ public class ImageLoader
 
 	/**
 	 * 队列的调度方式
-	 * 
+	 *
 	 * @author zhy
-	 * 
+	 *
 	 */
 	public enum Type
 	{
@@ -76,7 +76,7 @@ public class ImageLoader
 
 	/**
 	 * 单例获得该实例对象
-	 * 
+	 *
 	 * @return
 	 */
 	public static ImageLoader getInstance()
@@ -152,7 +152,7 @@ public class ImageLoader
 
 	/**
 	 * 加载图片
-	 * 
+	 *
 	 * @param path
 	 * @param imageView
 	 */
@@ -220,10 +220,10 @@ public class ImageLoader
 		}
 
 	}
-	
+
 	/**
 	 * 添加一个任务
-	 * 
+	 *
 	 * @param runnable
 	 */
 	private synchronized void addTask(Runnable runnable)
@@ -237,13 +237,13 @@ public class ImageLoader
 		{
 		}
 		mTasks.add(runnable);
-		
+
 		mPoolThreadHander.sendEmptyMessage(0x110);
 	}
 
 	/**
 	 * 取出一个任务
-	 * 
+	 *
 	 * @return
 	 */
 	private synchronized Runnable getTask()
@@ -257,10 +257,10 @@ public class ImageLoader
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 单例获得该实例对象
-	 * 
+	 *
 	 * @return
 	 */
 	public static ImageLoader getInstance(int threadCount, Type type)
@@ -282,7 +282,7 @@ public class ImageLoader
 
 	/**
 	 * 根据ImageView获得适当的压缩的宽和高
-	 * 
+	 *
 	 * @param imageView
 	 * @return
 	 */
@@ -299,8 +299,8 @@ public class ImageLoader
 			width = params.width; // Get layout width parameter
 		if (width <= 0)
 			width = getImageViewFieldValue(imageView, "mMaxWidth"); // Check
-																	// maxWidth
-																	// parameter
+		// maxWidth
+		// parameter
 		if (width <= 0)
 			width = displayMetrics.widthPixels;
 		int height = params.height == LayoutParams.WRAP_CONTENT ? 0 : imageView
@@ -309,8 +309,8 @@ public class ImageLoader
 			height = params.height; // Get layout height parameter
 		if (height <= 0)
 			height = getImageViewFieldValue(imageView, "mMaxHeight"); // Check
-																		// maxHeight
-																		// parameter
+		// maxHeight
+		// parameter
 		if (height <= 0)
 			height = displayMetrics.heightPixels;
 		imageSize.width = width;
@@ -329,7 +329,7 @@ public class ImageLoader
 
 	/**
 	 * 往LruCache中添加一张图片
-	 * 
+	 *
 	 * @param key
 	 * @param bitmap
 	 */
@@ -344,14 +344,14 @@ public class ImageLoader
 
 	/**
 	 * 计算inSampleSize，用于压缩图片
-	 * 
+	 *
 	 * @param options
 	 * @param reqWidth
 	 * @param reqHeight
 	 * @return
 	 */
 	private int calculateInSampleSize(BitmapFactory.Options options,
-			int reqWidth, int reqHeight)
+									  int reqWidth, int reqHeight)
 	{
 		// 源图片的宽度
 		int width = options.outWidth;
@@ -370,16 +370,15 @@ public class ImageLoader
 
 	/**
 	 * 根据计算的inSampleSize，得到压缩后图片
-	 * 
+	 *
 	 * @param pathName
 	 * @param reqWidth
 	 * @param reqHeight
 	 * @return
 	 */
 	private Bitmap decodeSampledBitmapFromResource(String pathName,
-			int reqWidth, int reqHeight)
+												   int reqWidth, int reqHeight)
 	{
-		String a = pathName;
 		// 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -390,6 +389,7 @@ public class ImageLoader
 		// 使用获取到的inSampleSize值再次解析图片
 		options.inJustDecodeBounds = false;
 		Bitmap bitmap = BitmapFactory.decodeFile(pathName, options);
+
 		return bitmap;
 	}
 
@@ -408,7 +408,7 @@ public class ImageLoader
 
 	/**
 	 * 反射获得ImageView设置的最大宽度和高度
-	 * 
+	 *
 	 * @param object
 	 * @param fieldName
 	 * @return

@@ -30,4 +30,8 @@ dependencies {
     compile project(':MaterialTabsModule')
     compile project(':library')
     compile project(':CicrcularFloatingActionMenuLibrary')
+    compile project(':MaterialEditText:library')
+    compile project(':materialList')
+    compile 'com.android.support:recyclerview-v7:23.1.0'
+    compile 'jp.wasabeef:recyclerview-animators:2.0.0'
 }

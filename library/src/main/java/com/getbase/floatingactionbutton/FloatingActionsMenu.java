@@ -24,16 +24,25 @@ import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
+/**
+ * 开始读痛苦的无注解的源码
+ */
 public class FloatingActionsMenu extends ViewGroup {
+  /**向上*/
   public static final int EXPAND_UP = 0;
+  /**向下*/
   public static final int EXPAND_DOWN = 1;
+  /**向左*/
   public static final int EXPAND_LEFT = 2;
+  /**向右*/
   public static final int EXPAND_RIGHT = 3;
-
+    /**标签在按钮的左边*/
   public static final int LABELS_ON_LEFT_SIDE = 0;
+  /**标签在按钮的右边*/
   public static final int LABELS_ON_RIGHT_SIDE = 1;
-
+    /**动画的持续时间*/
   private static final int ANIMATION_DURATION = 300;
+    /**加号的旋转角度*/
   private static final float COLLAPSED_PLUS_ROTATION = 0f;
   private static final float EXPANDED_PLUS_ROTATION = 90f + 45f;
 
@@ -42,17 +51,23 @@ public class FloatingActionsMenu extends ViewGroup {
   private int mAddButtonColorPressed;
   private int mAddButtonSize;
   private boolean mAddButtonStrokeVisible;
+    /**扩张的方向*/
   private int mExpandDirection;
-
+/**每个Button之间的间隔*/
   private int mButtonSpacing;
+    /**标签和按钮之间的距离*/
   private int mLabelsMargin;
   private int mLabelsVerticalOffset;
-
+    /**按钮的状态*/
   private boolean mExpanded;
-
+    /**展开动画的集合*/
   private AnimatorSet mExpandAnimation = new AnimatorSet().setDuration(ANIMATION_DURATION);
+    /**收缩动画的集合*/
   private AnimatorSet mCollapseAnimation = new AnimatorSet().setDuration(ANIMATION_DURATION);
+    /**添加按钮的FLAB*/
   private AddFloatingActionButton mAddButton;
+    /**一个LayerDrawable是一个可以管理一组drawable对象的drawable。在LayerDrawable的drawable资源按照列表的顺序绘制，列表的最后一个drawable绘制在最上层。
+     它所包含的一组drawable资源用多个<item>元素表示，一个<item>元素代表一个drawable资源。*/
   private RotatingDrawable mRotatingDrawable;
   private int mMaxButtonWidth;
   private int mMaxButtonHeight;
@@ -86,6 +101,7 @@ public class FloatingActionsMenu extends ViewGroup {
   }
 
   private void init(Context context, AttributeSet attributeSet) {
+      //每个Button的间隔就是每个fab的间隔减去阴影宽度 减去 阴影补偿
     mButtonSpacing = (int) (getResources().getDimension(R.dimen.fab_actions_spacing) - getResources().getDimension(R.dimen.fab_shadow_radius) - getResources().getDimension(R.dimen.fab_shadow_offset));
     mLabelsMargin = getResources().getDimensionPixelSize(R.dimen.fab_labels_margin);
     mLabelsVerticalOffset = getResources().getDimensionPixelSize(R.dimen.fab_shadow_offset);

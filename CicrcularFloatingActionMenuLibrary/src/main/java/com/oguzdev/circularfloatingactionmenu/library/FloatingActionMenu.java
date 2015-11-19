@@ -28,14 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides the main structure of the menu.
+ * Provides the main structure of the menu.提供了主体结构的菜单
  */
 
 public class FloatingActionMenu {
 
-    /** Reference to the view (usually a button) to trigger the menu to show */
+    /** Reference to the view (usually a button) to trigger the menu to show 引用视图(通常是一个按钮)来触发菜单显示*/
     private View mainActionView;
-    /** The angle (in degrees, modulus 360) which the circular menu starts from  */
+    /** The angle (in degrees, modulus 360) which the circular menu starts from  角(度,模量360),从循环菜单*/
     private int startAngle;
     /** The angle (in degrees, modulus 360) which the circular menu ends at  */
     private int endAngle;

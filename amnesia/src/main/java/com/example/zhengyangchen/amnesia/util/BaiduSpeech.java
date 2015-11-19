@@ -9,10 +9,20 @@ import com.baidu.voicerecognition.android.VoiceRecognitionClient;
 import com.baidu.voicerecognition.android.VoiceRecognitionConfig;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
 import com.example.zhengyangchen.amnesia.R;
+import com.example.zhengyangchen.amnesia.bean.Alarms;
+import com.example.zhengyangchen.amnesia.bean.Memo;
+import com.example.zhengyangchen.amnesia.bean.SemanticParsingObject;
+import com.example.zhengyangchen.amnesia.dao.AlarmsDB;
+import com.example.zhengyangchen.amnesia.dao.MemoDB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -46,7 +56,7 @@ public class BaiduSpeech {
     }
 
 
-    public  BaiduASRDigitalDialog getBaiduASRDialogInstance() {
+    public BaiduASRDigitalDialog getBaiduASRDialogInstance() {
         Bundle params = new Bundle();
         params.putInt(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_BLUE_LIGHTBG);
         mDialog = new BaiduASRDigitalDialog(mContext, params);
@@ -84,8 +94,12 @@ public class BaiduSpeech {
         config.setSampleRate(VoiceRecognitionConfig.SAMPLE_RATE_8K);
         //设置垂直领域，默认为输入，输入下不支持语义解析所以换为搜索
         config.setProp(VoiceRecognitionConfig.PROP_SEARCH);
+        //开启通讯录支持，识别人名更加高效
+        config.enableContacts();
         //开启语义解析
         config.enableNLU();
+        //关闭语音能量监听节省资源
+        config.enableVoicePower(false);
         //启动百度语音
         int code = mASREngine.startVoiceRecognition(mMyVoiceRecogListener, config);
         if (code == VoiceRecognitionClient.START_WORK_RESULT_WORKING) {
@@ -191,6 +205,139 @@ public class BaiduSpeech {
         return results;
     }
 
+
+    /**
+     * 将百度语音语义解析结果解释为一个对象，这个对象中包含了所有关键信息
+     *
+     * @param result 传入的原始结果
+     * @return 解析实例后的对象
+     */
+    public static SemanticParsingObject getSemanticParsingObject(String result) {
+        SemanticParsingObject semanticParsingObject = new SemanticParsingObject();
+        //@SemanticParsingObject
+        semanticParsingObject.setOriginalResultJson(result);
+        JSONArray jsonArrayResults;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                JSONObject temp_json = new JSONObject(result);
+
+                String temp_str = temp_json.optString("json_res");
+                if (!TextUtils.isEmpty(temp_str)) {
+                    temp_json = new JSONObject(temp_str);
+                    //用户原始输入文本
+                    String rawText = temp_json.optString("raw_text");
+                    //@@
+                    semanticParsingObject.setRawText(rawText);
+                    //原始输入文本 被分词 矫正 的文本
+                    String parsedText = temp_json.optString("parsed_text");
+                    //@@
+                    semanticParsingObject.setParsedText(parsedText);
+                    //意图表示素组的json文本
+                    String results = temp_json.optString("results");
+                    //@@
+                    semanticParsingObject.setResults(results);
+                    List<SemanticParsingObject.ResultObject> resultObjectList = new ArrayList<>();
+                    if (!TextUtils.isEmpty(results)) {
+                        jsonArrayResults = temp_json.optJSONArray("results");
+
+                        for (int i = 0; i < jsonArrayResults.length(); i++) {
+                            JSONObject jsonObject = jsonArrayResults.getJSONObject(0);
+
+                            String domain = jsonObject.getString("domain");
+                            String intent = jsonObject.getString("intent");
+                            double score = jsonObject.getDouble("score");
+                            JSONObject object = jsonObject.getJSONObject("object");
+
+                            SemanticParsingObject.ResultObject resultObject = semanticParsingObject.getResultObjectInstance();
+                            //@@@
+                            resultObject.setDomain(domain);
+                            //@@@
+                            resultObject.setIntent(intent);
+                            //@@@
+                            resultObject.setScore(score);
+                            //@@@
+                            resultObject.setObject(object);
+                            resultObjectList.add(resultObject);
+                        }
+
+                        semanticParsingObject.setObjects(resultObjectList);
+                    }
+                }
+            } catch (JSONException e) {
+                Log.w(TAG, e);
+            }
+        }
+        return semanticParsingObject;
+    }
+
+    /**
+     * 将语义解析对象进行处理
+     * @param context 上下文
+     * @param semanticParsingObject 语义解析对象
+     * @return 处理结果 list
+     */
+    public static List<Object> getDaoInstanceList(Context context, SemanticParsingObject semanticParsingObject) {
+
+        List<Object> objectList = new ArrayList<>();
+        try {
+            //判断语义解析对象是否为空
+            if (semanticParsingObject != null) {
+                //不为空
+                //判断原始数据结果是否为空
+                if (semanticParsingObject.getOriginalResultJson() != null) {
+                    //不为空
+                    // 判断语义解析对象中的意图表示数组的json文本是否为空
+                    if (semanticParsingObject.getResults() != null) {
+                        //不为空
+                        //判断存储意图数组的list的长度
+                        SemanticParsingObject.ResultObject resultObject = null;
+                        if (semanticParsingObject.getObjects().size() > 0) {
+                            for (int i = 0; i < semanticParsingObject.getObjects().size(); i++) {
+                                resultObject = semanticParsingObject.getObjects().get(i);
+                                //获取领域取值
+                                String domain = resultObject.getDomain();
+                                switch (domain) {
+                                    //领域取值为 提醒 将数据以alarm
+                                    case "alarm":
+                                        JSONObject jsonObject = resultObject.getObject();
+                                        Alarms alarms = new Alarms();
+                                        alarms.setAlarmsDesc(jsonObject.getString("event"));
+                                        //拼接日期时间
+                                        String dateAndTime = jsonObject.getString("date") + " " + jsonObject.getString("time");
+                                        long date = DateUtil.parseDate(dateAndTime).getTime();
+                                        alarms.setAlarmsRunTime(date);
+                                        objectList.add(alarms);
+                                        break;
+                                    default:
+                                        createMemoAndAddToList(semanticParsingObject,objectList);
+                                }
+                            }
+                        } else {
+                            createMemoAndAddToList(semanticParsingObject, objectList);
+                        }
+                    } else {//语义解析对象中的意图表示数组的json文本为空
+
+                        createMemoAndAddToList(semanticParsingObject, objectList);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return objectList;
+    }
+
+    private static void createMemoAndAddToList(SemanticParsingObject semanticParsingObject, List<Object> objectList) {
+        String rawText = semanticParsingObject.getRawText();
+        //数据产生的时间
+        long dateStr = new Date().getTime();
+        Memo memo = new Memo();
+        memo.setMemoDesc(rawText);
+        memo.setDateStr(dateStr);
+        objectList.add(memo);
+    }
+
     /**
      * 创建接口
      */
@@ -207,5 +354,9 @@ public class BaiduSpeech {
     public VoiceClientStatusChangeListener setVoiceClientStatusChangeListener(VoiceClientStatusChangeListener listener) {
         this.mListener = listener;
         return mListener;
+    }
+
+    public void stopBaiduSpeech() {
+        mASREngine.stopVoiceRecognition();
     }
 }

@@ -5,11 +5,13 @@
       <module fileurl="file://$PROJECT_DIR$/CicrcularFloatingActionMenuLibrary/CicrcularFloatingActionMenuLibrary.iml" filepath="$PROJECT_DIR$/CicrcularFloatingActionMenuLibrary/CicrcularFloatingActionMenuLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/MaterialDesign/MaterialDesign.iml" filepath="$PROJECT_DIR$/MaterialDesign/MaterialDesign.iml" />
       <module fileurl="file://$PROJECT_DIR$/MaterialDesignDemo/MaterialDesignDemo.iml" filepath="$PROJECT_DIR$/MaterialDesignDemo/MaterialDesignDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialEditText/MaterialEditText.iml" filepath="$PROJECT_DIR$/MaterialEditText/MaterialEditText.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialEditText/library/MaterialEditText-library.iml" filepath="$PROJECT_DIR$/MaterialEditText/library/MaterialEditText-library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialEditText-master/MaterialEditText-master.iml" filepath="$PROJECT_DIR$/MaterialEditText-master/MaterialEditText-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/MaterialTabsModule/MaterialTabsModule.iml" filepath="$PROJECT_DIR$/MaterialTabsModule/MaterialTabsModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/TheFirstCode.iml" filepath="$PROJECT_DIR$/TheFirstCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/amnesia/amnesia.iml" filepath="$PROJECT_DIR$/amnesia/amnesia.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-ui-master/android-ui-master.iml" filepath="$PROJECT_DIR$/android-ui-master/android-ui-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baiduSpeechRecognizerDemo/baiduSpeechRecognizerDemo.iml" filepath="$PROJECT_DIR$/baiduSpeechRecognizerDemo/baiduSpeechRecognizerDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/imageloader/imageloader.iml" filepath="$PROJECT_DIR$/imageloader/imageloader.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
@@ -17,6 +19,8 @@
       <module fileurl="file://$PROJECT_DIR$/materialList/materialList.iml" filepath="$PROJECT_DIR$/materialList/materialList.iml" />
       <module fileurl="file://$PROJECT_DIR$/networktest/networktest.iml" filepath="$PROJECT_DIR$/networktest/networktest.iml" />
       <module fileurl="file://$PROJECT_DIR$/photo/photo.iml" filepath="$PROJECT_DIR$/photo/photo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rippleView/rippleView.iml" filepath="$PROJECT_DIR$/rippleView/rippleView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialEditText-master/sample/sample.iml" filepath="$PROJECT_DIR$/MaterialEditText-master/sample/sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
       <module fileurl="file://$PROJECT_DIR$/slilingmenu/slilingmenu.iml" filepath="$PROJECT_DIR$/slilingmenu/slilingmenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/voiceRecognitionDemo/voiceRecognitionDemo.iml" filepath="$PROJECT_DIR$/voiceRecognitionDemo/voiceRecognitionDemo.iml" />

@@ -5,20 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-   <FrameLayout
+   <com.dexafree.materialList.view.MaterialListView
+       android:id="@+id/id_card_lv"
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <TextView
-           android:text="@string/noData"
-           android:layout_gravity="center"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
-       <!--<com.dexafree.materialList.view.MaterialListView-->
-           <!--android:id="@+id/id_calendar_card_lv"-->
-           <!--android:layout_width="wrap_content"-->
-           <!--android:layout_height="wrap_content">-->
+       android:layout_height="match_parent"/>
 
-       <!--</com.dexafree.materialList.view.MaterialListView>-->
-   </FrameLayout>
 
 </LinearLayout>

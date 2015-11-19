@@ -10,8 +10,12 @@ import android.util.Log;
 
 import com.baidu.voicerecognition.android.VoiceRecognitionClient;
 import com.example.zhengyangchen.amnesia.bean.Alarms;
+import com.example.zhengyangchen.amnesia.bean.Memo;
+import com.example.zhengyangchen.amnesia.bean.SemanticParsingObject;
 import com.example.zhengyangchen.amnesia.dao.AlarmsDB;
+import com.example.zhengyangchen.amnesia.dao.MemoDB;
 import com.example.zhengyangchen.amnesia.util.BaiduSpeech;
+import com.example.zhengyangchen.amnesia.util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,30 +90,34 @@ public class SpeechService extends Service {
                                     List results = (List) obj;
                                     if (results.size() > 0) {
                                         String temp_str = results.get(0).toString();
-                                        //将json中的“json_res”数据提取出
-                                        JSONArray result_jsonArray = BaiduSpeech.getJsonArrayResult(temp_str);
-                                        if (result_jsonArray != null) {
-                                            try {
-                                                //提取出alarms对象
-                                                Alarms alarms = AlarmsDB.getAlarmsInstance(result_jsonArray);
-                                                if (alarms != null) {
-                                                    //将闹钟状态设置为响铃状态
-                                                    alarms.setIsAlarmsRun(Alarms.ALARMS_IS_RUNING);
-                                                    //将alarms对象保存进数据库
-                                                    AlarmsDB.getInstance(getBaseContext()).saveAlarmsByContentProvider(alarms);
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        } else {
-//                                                //如果空就提示
-//                                                Toast.makeText(getBaseContext(), "请确保您的语义中有提醒您的意思，" +
-//                                                        "例如”叫我“，”提醒我“，等类似词", Toast.LENGTH_LONG).show();
-                                            //开启震动
-                                            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                                            vibrator.vibrate(500);
-
-                                        }
+                                        SemanticParsingObject semanticParsingObject = BaiduSpeech.getSemanticParsingObject(temp_str);
+                                        List<Object> objectList = BaiduSpeech.getDaoInstanceList(getApplicationContext(),
+                                                semanticParsingObject);
+                                        saveDataToDatabase(objectList);
+//                                        //将json中的“json_res”数据提取出
+//                                        JSONArray result_jsonArray = BaiduSpeech.getJsonArrayResult(temp_str);
+//                                        if (result_jsonArray != null) {
+//                                            try {
+//                                                //提取出alarms对象
+//                                                Alarms alarms = AlarmsDB.getAlarmsInstance(result_jsonArray);
+//                                                if (alarms != null) {
+//                                                    //将闹钟状态设置为响铃状态
+//                                                    alarms.setIsAlarmsRun(Alarms.ALARMS_IS_RUNING);
+//                                                    //将alarms对象保存进数据库
+//                                                    AlarmsDB.getInstance(getBaseContext()).saveAlarmsByContentProvider(alarms);
+//                                                }
+//                                            } catch (JSONException e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                        } else {
+////                                                //如果空就提示
+////                                                Toast.makeText(getBaseContext(), "请确保您的语义中有提醒您的意思，" +
+////                                                        "例如”叫我“，”提醒我“，等类似词", Toast.LENGTH_LONG).show();
+//                                            //开启震动
+//                                            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                                            vibrator.vibrate(500);
+//
+//                                        }
 
                                     }
                                 }
@@ -133,6 +141,26 @@ public class SpeechService extends Service {
                 });
             }
         }).start();
+    }
+
+    /**
+     * 将数据存入数据库
+     * @param objectList
+     */
+    private void saveDataToDatabase(List<Object> objectList) {
+        if (!objectList.isEmpty()) {
+            for (int i = 0; i < objectList.size(); i++) {
+                Object object = objectList.get(i);
+                if (object instanceof Alarms) {
+                    Alarms alarms = (Alarms) object;
+                    AlarmsDB.getInstance(getApplicationContext()).saveAlarmsByContentProvider(alarms);
+                }
+                if (object instanceof Memo) {
+                    Memo memo = (Memo) object;
+                    MemoDB.getInstance(getApplicationContext()).saveMemoByContentProider(memo);
+                }
+            }
+        }
     }
 
     @Nullable

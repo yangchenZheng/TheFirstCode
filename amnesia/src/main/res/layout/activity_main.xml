@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <!--<android.support.design.widget.TabLayout
@@ -18,23 +20,23 @@
 
     </android.support.design.widget.TabLayout>-->
 
-<android.support.v4.view.ViewPager
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:id="@+id/id_viewpager">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
 
-</android.support.v4.view.ViewPager>
+    </android.support.v4.view.ViewPager>
 
     <it.neokree.materialtabs.MaterialTabHost
         android:id="@+id/materialTabHost"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:materialTabsPrimaryColor="@color/white_pressed"
-        app:iconColor="@color/half_black"
         app:accentColor="#3f51b4"
-        app:hasIcons="true"/>
-
-
+        app:hasIcons="true"
+        app:iconColor="@color/half_black"
+        app:materialTabsPrimaryColor="@color/white_pressed" />
 </LinearLayout>
+
+

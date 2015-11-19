@@ -1,6 +1,7 @@
 package com.example.zhengyangchen.amnesia.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -12,5 +13,9 @@ public class Util {
     }
     public static void showLongToast(Context context,String content) {
         Toast.makeText(context,content,Toast.LENGTH_LONG).show();
+    }
+
+    public static void LogZyc(String string) {
+        Log.d("zyc", string);
     }
 }

@@ -3,31 +3,37 @@ package com.example.zhengyangchen.amnesia.activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zhengyangchen.amnesia.R;
+import com.example.zhengyangchen.amnesia.adapter.SelectPhotoAdapter;
 import com.example.zhengyangchen.amnesia.bean.ImageFolder;
+import com.example.zhengyangchen.amnesia.util.ImageLoader;
 import com.example.zhengyangchen.amnesia.util.Util;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SelectPhotoActivity extends AppCompatActivity {
     private static final int COMPLETE_SCANNING = 0x11;
@@ -38,7 +44,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
     /**
      * gridView的数据适配器
      */
-    private Adapter mAdapter;
+    private SelectPhotoAdapter mAdapter;
     /**
      * 弹出PopupWindow的textView
      */
@@ -76,7 +82,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
      */
     private List<String> mImageList;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         //在主线程中给adapter设置数据
         @Override
         public void handleMessage(Message msg) {
@@ -94,11 +100,20 @@ public class SelectPhotoActivity extends AppCompatActivity {
             return;
         }
 
-        mImageList = Arrays.asList(mMaxPictureDir.list());
+        mImageList = Arrays.asList(mMaxPictureDir.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String filename) {
+                if (filename.endsWith(".jpg")
+                        || filename.endsWith(".png")
+                        || filename.endsWith(".jpeg"))
+                    return true;
+                return false;
+            }
+        }));
 
+        mAdapter = new SelectPhotoAdapter(this, mMaxPictureDir.getAbsolutePath(), mImageList);
 
-
-
+        mGridView.setAdapter(mAdapter);
 
 
     }
@@ -108,6 +123,8 @@ public class SelectPhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_photo);
+
+        setTitle("相册");
 
         initView();
         initData();
@@ -122,6 +139,8 @@ public class SelectPhotoActivity extends AppCompatActivity {
     }
 
     private void initData() {
+
+        mImageFolderList = new ArrayList<>();
         //获取图片信息
         getImages();
 
@@ -210,38 +229,31 @@ public class SelectPhotoActivity extends AppCompatActivity {
                 //通知handler完成扫描
                 mHandler.sendEmptyMessage(COMPLETE_SCANNING);
             }
-        });
+        }).start();
 
     }
 
-    private class MyAdapter extends BaseAdapter{
-        private String mImageDir;
-        private List<String> mImagePathList;
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, SelectPhotoActivity.class);
+        context.startActivity(intent);
+    }
 
-        public MyAdapter(Context context,String imageDir, List<String>  imagePaths) {
-            this.mImageDir = imageDir;
-            this.mImagePathList = imagePaths;
-        }
+    /**
+     * 按下返回键的时候将选中的图片地址返回
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        ArrayList<String> arrayPaths = new ArrayList<>(SelectPhotoAdapter.getSelectPhotoPaths());
+        intent.putExtra("select_photo_paths",arrayPaths);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
-        @Override
-        public int getCount() {
-            return mImagePathList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mImagePathList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mProgressDalog.dismiss();
     }
 }
 
