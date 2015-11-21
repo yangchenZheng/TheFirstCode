@@ -172,8 +172,8 @@ public class ImageLoader
 					ImageView imageView = holder.imageView;
 					Bitmap bm = holder.bitmap;
 					String path = holder.path;
-					if (imageView.getTag().toString().equals(path))
-					{
+					if (imageView.getTag().toString().equals(path)) {
+						bm = Util.getDigreeBimap(path, bm);
 						imageView.setImageBitmap(bm);
 					}
 				}

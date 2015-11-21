@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.opengl.Matrix;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -168,7 +170,11 @@ public class CalendarFragment extends Fragment {
     }
 
     private Drawable getDrawableFromPath(String path) {
-        Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(path, 300, 300);
+//        Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(path, 300, 300);
+//        android.graphics.Matrix matrix = new android.graphics.Matrix();
+//        matrix.setRotate(90);
+//        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        Bitmap bitmap = Util.loadBitmap(path, true);
 
         Drawable drawable = new BitmapDrawable(bitmap);
         return drawable;

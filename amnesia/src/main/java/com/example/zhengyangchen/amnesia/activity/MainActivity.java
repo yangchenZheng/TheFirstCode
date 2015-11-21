@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         registerScreenActionReceiverService.onStartService(MainActivity.this);
         res = this.getResources();
         //初始化view
-
         initView();
     }
 

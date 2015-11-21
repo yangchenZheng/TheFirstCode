@@ -11,6 +11,7 @@ import com.example.zhengyangchen.amnesia.service.registerScreenActionReceiverSer
 
 
 /**
+ *
  * Created by zhengyangchen on 2015/10/31.
  */
 public class UserPresentReceiver extends BroadcastReceiver {

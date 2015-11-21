@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import com.example.zhengyangchen.amnesia.util.FileUtils;
 import com.example.zhengyangchen.amnesia.util.Util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +79,7 @@ public class TakePhotoActivity extends AppCompatActivity {
      * 存储添加按钮的图片，防止多次存储
      */
     private SharedPreferences.Editor mPrefEditor;
+    private String mPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,6 +227,11 @@ public class TakePhotoActivity extends AppCompatActivity {
      */
     private void openCameraSavePhoto() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //将时间作为文件名
+        String fileName = String.valueOf(System.currentTimeMillis());
+         mPath = Environment.getExternalStorageDirectory().getPath() + "/" + fileName + ".png";
+        Uri uri = Uri.fromFile(new File(mPath));
+        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
 
@@ -238,11 +247,13 @@ public class TakePhotoActivity extends AppCompatActivity {
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (mPathList.size() < 9 && resultCode == RESULT_OK) {
-                    //从相机返回的数据中获取照片
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    String path = saveBitmapAndGetPath(bitmap);
+//                    //从相机返回的数据中获取照片
+//                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                    String path = saveBitmapAndGetPath(bitmap);
                     if (mPathList.size() > 0) {
-                        mPathList.add(mPathList.size() - 1, path);
+                        mPathList.add(mPathList.size() - 1, mPath);
+                        //将mPath置为空
+                        mPath = null;
                         mTakePhotoAdapter.notifyDataSetChanged();
                     } else {
                         throw new IllegalArgumentException("mPathList 为空 它没有得到正确的初始化");
@@ -270,6 +281,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
     /**
      * 以系统时间保存图片并得到保存图片的地址
