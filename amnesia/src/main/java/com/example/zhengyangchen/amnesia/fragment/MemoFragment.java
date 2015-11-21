@@ -24,6 +24,7 @@ import com.example.zhengyangchen.amnesia.bean.Memo;
 import com.example.zhengyangchen.amnesia.contentProvider.AmnesiaProvider;
 import com.example.zhengyangchen.amnesia.dao.MemoDB;
 import com.example.zhengyangchen.amnesia.util.ArcMenu;
+import com.example.zhengyangchen.amnesia.util.OnNotifyDataSetChangedListener;
 
 /**
  * 备忘fragment
@@ -50,6 +51,7 @@ public class MemoFragment extends Fragment {
      * loader的ID
      */
     private static final int LOADER_ID = 1;
+    private OnNotifyDataSetChangedListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,10 +74,6 @@ public class MemoFragment extends Fragment {
 
     /**
      * loader 用于当数据改变时通知adapter改变
-     * <p/>
-     * 遇到问题：在contentprovider中添加了新表，然后把MEMO_ALL查询的语句补全了，就出现了listView数据不会时时更新
-     * 解决：在memo_alll查询语句结束后添加数据改变通知
-     * 原因：？？？？？研究下loader原理
      */
     private void initLoader() {
         /**
@@ -135,6 +133,12 @@ public class MemoFragment extends Fragment {
             public void onLongClick(View view) {
                 //弹出快速添加的对话框
                 addMemoDialogFragment addMemoDialogFragment = new addMemoDialogFragment();
+                addMemoDialogFragment.setOnNotifyDataSetChangedListener(new OnNotifyDataSetChangedListener() {
+                    @Override
+                    public void notifyDataChangeListener(Memo memo) {
+                     mListener.notifyDataChangeListener(memo);
+                    }
+                });
                 addMemoDialogFragment.show(getFragmentManager(), "addMemoDialog");
             }
         });
@@ -165,6 +169,10 @@ public class MemoFragment extends Fragment {
         //为listView设置adapter
         mListView.setAdapter(cursorAdapter);
 
+    }
+
+    public void setOnMemoNotifyDataSetChangedListener(OnNotifyDataSetChangedListener onNotifyDataSetChangedListener) {
+        this.mListener = onNotifyDataSetChangedListener;
     }
 
 

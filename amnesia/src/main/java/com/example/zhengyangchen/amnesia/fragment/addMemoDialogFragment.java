@@ -10,7 +10,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,6 +20,7 @@ import com.example.zhengyangchen.amnesia.R;
 import com.example.zhengyangchen.amnesia.bean.Memo;
 import com.example.zhengyangchen.amnesia.dao.MemoDB;
 import com.example.zhengyangchen.amnesia.util.ClearEditText;
+import com.example.zhengyangchen.amnesia.util.OnNotifyDataSetChangedListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +32,7 @@ public class addMemoDialogFragment extends DialogFragment {
     private View view;
     private ClearEditText clearEditText;
     private Button cancelButton;
+    private OnNotifyDataSetChangedListener mListener ;
 
     @Nullable
     @Override
@@ -85,6 +86,7 @@ public class addMemoDialogFragment extends DialogFragment {
             memo.setDateStr(new Date().getTime());
             //像数据库中存入数据
             MemoDB.getInstance(getContext()).saveMemoByContentProider(memo);
+            mListener.notifyDataChangeListener(memo);
         } else {
             Toast.makeText(getActivity(),"不能保存一条空记录！",Toast.LENGTH_SHORT).show();
             return;
@@ -134,6 +136,10 @@ public class addMemoDialogFragment extends DialogFragment {
         baiduASRDigitalDialog.show();
     }
 
+
+    public void setOnNotifyDataSetChangedListener(OnNotifyDataSetChangedListener onNotifyDataSetChangedListener) {
+        this.mListener = onNotifyDataSetChangedListener;
+    }
 
 
 

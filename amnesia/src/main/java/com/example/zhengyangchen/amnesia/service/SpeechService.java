@@ -15,6 +15,7 @@ import com.example.zhengyangchen.amnesia.bean.SemanticParsingObject;
 import com.example.zhengyangchen.amnesia.dao.AlarmsDB;
 import com.example.zhengyangchen.amnesia.dao.MemoDB;
 import com.example.zhengyangchen.amnesia.util.BaiduSpeech;
+import com.example.zhengyangchen.amnesia.util.OnNotifyDataSetChangedListener;
 import com.example.zhengyangchen.amnesia.util.Util;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ public class SpeechService extends Service {
 
     public static final String TAG = "zyc";
     private BaiduSpeech baiduSpeech;
+    private OnNotifyDataSetChangedListener mListener;
 
 //    public class MyBinder extends Binder {
 //
@@ -157,6 +159,7 @@ public class SpeechService extends Service {
                 }
                 if (object instanceof Memo) {
                     Memo memo = (Memo) object;
+                    mListener.notifyDataChangeListener(memo);
                     MemoDB.getInstance(getApplicationContext()).saveMemoByContentProider(memo);
                 }
             }
@@ -167,5 +170,9 @@ public class SpeechService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    public void setOnServiceNotifyDataSetChangedListener(OnNotifyDataSetChangedListener onNotifyDataSetChangedListener) {
+        this.mListener = onNotifyDataSetChangedListener;
     }
 }

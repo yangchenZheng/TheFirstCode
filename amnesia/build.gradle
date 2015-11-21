@@ -34,4 +34,5 @@ dependencies {
     compile project(':materialList')
     compile 'com.android.support:recyclerview-v7:23.1.0'
     compile 'jp.wasabeef:recyclerview-animators:2.0.0'
+    compile files('src/libs/zxing.jar')
 }

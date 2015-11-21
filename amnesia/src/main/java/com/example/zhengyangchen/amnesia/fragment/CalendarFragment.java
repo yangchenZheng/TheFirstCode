@@ -2,29 +2,42 @@ package com.example.zhengyangchen.amnesia.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
+import com.dexafree.materialList.listeners.OnDismissCallback;
 import com.dexafree.materialList.view.MaterialListView;
 import com.example.zhengyangchen.amnesia.R;
 import com.example.zhengyangchen.amnesia.adapter.MemoAdapter;
 import com.example.zhengyangchen.amnesia.bean.Memo;
 import com.example.zhengyangchen.amnesia.dao.MemoDB;
+import com.example.zhengyangchen.amnesia.util.ImageLoader;
 import com.example.zhengyangchen.amnesia.util.Util;
 
+import java.io.File;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
+ * MaterialListView展示数据
  * Created by zhengyangchen on 2015/10/22.
  */
 public class CalendarFragment extends Fragment {
@@ -55,6 +68,16 @@ public class CalendarFragment extends Fragment {
 
         initData();
         initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        mMaterialListView.setOnDismissCallback(new OnDismissCallback() {
+            @Override
+            public void onDismiss(@NonNull Card card, int position) {
+                deleteDataFromDatabase(card);
+            }
+        });
     }
 
 
@@ -70,67 +93,101 @@ public class CalendarFragment extends Fragment {
         mMaterialListView.getItemAnimator().setRemoveDuration(300);
         for (int i = 0; i < mMemoList.size(); i++) {
             final Memo memo = mMemoList.get(i);
-            Card card;
-            if (TextUtils.isEmpty(memo.getPhotoUrl())) {
-                card = new Card.Builder(mContext)
-                        .setTag(memo)
-                        .setDismissible()
-                        .withProvider(new CardProvider())
-                        .setTitle(memo.getMemoDesc())
-                        .setDescription(MemoAdapter.dateLongToString(memo.getDateStr()))
-                        .setLayout(R.layout.material_basic_buttons_card)
-                        .addAction(R.id.left_text_button, new TextViewAction(mContext)
-                                .setText("已完成")
-                                .setTextResourceColor(R.color.colorPrimary)
-                                .setListener(new OnActionClickListener() {
-                                    @Override
-                                    public void onActionClicked(View view, Card card) {
-                                        Memo memo1 = (Memo) card.getTag();
-                                        assert memo1 != null;
-                                        MemoDB.deleteMemoById(memo1.getId(), mContext);
-                                        card.dismiss();
-                                    }
-                                }))
-                        .endConfig()
-                        .build();
-            } else {
-                String[] paths = memo.getPhotoUrl().split("|");
-
-                card = new Card.Builder(mContext)
-                        .setTag(memo)
-                        .setDismissible()
-                        .withProvider(new CardProvider())
-                        .setTitle(memo.getMemoDesc())
-                        .setDescription(MemoAdapter.dateLongToString(memo.getDateStr()))
-                        .setLayout(R.layout.material_basic_image_buttons_card_layout)
-                        .setDrawable(R.drawable.ic_launcher)
-                        .addAction(R.id.image, new TextViewAction(mContext)
-                                .setListener(new OnActionClickListener() {
-                                    @Override
-                                    public void onActionClicked(View view, Card card) {
-                                        Memo memo1 = (Memo) card.getTag();
-                                        Util.showShortToast(mContext, memo.getMemoDesc() + "!");
-                                    }
-                                }))
-                        .addAction(R.id.left_text_button, new TextViewAction(mContext)
-                                .setText("已完成")
-                                .setTextResourceColor(R.color.colorPrimary)
-                                .setListener(new OnActionClickListener() {
-                                    @Override
-                                    public void onActionClicked(View view, Card card) {
-                                        Memo memo1 = (Memo) card.getTag();
-                                        assert memo1 != null;
-                                        MemoDB.deleteMemoById(memo1.getId(), mContext);
-                                        card.dismiss();
-                                    }
-                                }))
-                        .endConfig()
-                        .build();
-            }
-
-            mMaterialListView.getAdapter().add(card);
+            //创建card
+            CreateCard(memo);
 
         }
     }
+
+    public void CreateCard(final Memo memo) {
+        Card card;
+        if (TextUtils.isEmpty(memo.getPhotoUrl())) {
+            card = new Card.Builder(mContext)
+                    .setTag(memo)
+                    .setDismissible()
+                    .withProvider(new CardProvider())
+                    .setTitle(memo.getMemoDesc())
+                    .setDescription(MemoAdapter.dateLongToString(memo.getDateStr()))
+                    .setLayout(R.layout.material_basic_buttons_card)
+                    .addAction(R.id.left_text_button, new TextViewAction(mContext)
+                            .setText("已完成")
+                            .setTextResourceColor(R.color.colorPrimary)
+                            .setListener(new OnActionClickListener() {
+                                @Override
+                                public void onActionClicked(View view, Card card) {
+                                    deleteDataFromDatabase(card);
+                                }
+                            }))
+                    .endConfig()
+                    .build();
+        } else {
+            final String path = getFirstPath(memo);
+            Drawable drawable = getDrawableFromPath(path);
+            card = new Card.Builder(mContext)
+                    .setTag(memo)
+                    .setDismissible()
+                    .withProvider(new CardProvider())
+                    .setTitle(memo.getMemoDesc())
+                    .setDescription(MemoAdapter.dateLongToString(memo.getDateStr()))
+                    .setLayout(R.layout.material_basic_image_buttons_card_layout)
+                    .setDrawable(drawable)
+                    .addAction(R.id.image, new TextViewAction(mContext)
+                            .setListener(new OnActionClickListener() {
+                                @Override
+                                public void onActionClicked(View view, Card card) {
+                                    Memo memo1 = (Memo) card.getTag();
+                                    Util.showShortToast(mContext, memo.getMemoDesc() + "!");
+                                    File file = new File(getFirstPath(memo1));
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setDataAndType(Uri.fromFile(file), "image/*");
+                                    startActivity(intent);
+                                }
+                            }))
+                    .addAction(R.id.left_text_button, new TextViewAction(mContext)
+                            .setText("已完成")
+                            .setTextResourceColor(R.color.colorPrimary)
+                            .setListener(new OnActionClickListener() {
+                                @Override
+                                public void onActionClicked(View view, Card card) {
+                                    //将这条数据从数据库中删除
+                                    deleteDataFromDatabase(card);
+                                }
+                            }))
+                    .endConfig()
+                    .build();
+        }
+        mMaterialListView.getAdapter().add(card);
+
+    }
+
+    private void deleteDataFromDatabase(Card card) {
+        Memo memo1 = (Memo) card.getTag();
+        assert memo1 != null;
+        MemoDB.deleteMemoById(memo1.getId(), mContext);
+        card.dismiss();
+    }
+
+    private Drawable getDrawableFromPath(String path) {
+        Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(path, 300, 300);
+
+        Drawable drawable = new BitmapDrawable(bitmap);
+        return drawable;
+    }
+
+    private String getFirstPath(Memo memo) {
+        String path = memo.getPhotoUrl();
+        String[] paths = path.split(" ");
+        return paths[0];
+    }
+
+    public void notifyDataSetChanged() {
+        mMaterialListView.getAdapter().notifyDataSetChanged();
+    }
+
+
+
+
+
+
 
 }

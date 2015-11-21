@@ -328,7 +328,11 @@ public class TakePhotoActivity extends AppCompatActivity {
     private String listToString(List<String> mPathList) {
         String paths = null;
         for (int i = 0; i < mPathList.size() - 1; i++) {
-            paths = paths + "|" + mPathList.get(i);
+            if (i == 0) {
+                paths = mPathList.get(i);
+            } else {
+                paths = paths + " " + mPathList.get(i);
+            }
         }
         return paths;
     }

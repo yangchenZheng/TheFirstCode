@@ -350,7 +350,7 @@ public class ImageLoader
 	 * @param reqHeight
 	 * @return
 	 */
-	private int calculateInSampleSize(BitmapFactory.Options options,
+	public static int calculateInSampleSize(BitmapFactory.Options options,
 									  int reqWidth, int reqHeight)
 	{
 		// 源图片的宽度
@@ -376,7 +376,7 @@ public class ImageLoader
 	 * @param reqHeight
 	 * @return
 	 */
-	private Bitmap decodeSampledBitmapFromResource(String pathName,
+	public static Bitmap decodeSampledBitmapFromResource(String pathName,
 												   int reqWidth, int reqHeight)
 	{
 		// 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
