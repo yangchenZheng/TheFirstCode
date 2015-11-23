@@ -330,6 +330,7 @@ public class TakePhotoActivity extends AppCompatActivity {
 
         //保存到数据库
         MemoDB.getInstance(TakePhotoActivity.this).saveMemoByContentProider(memo);
+
     }
 
     /**

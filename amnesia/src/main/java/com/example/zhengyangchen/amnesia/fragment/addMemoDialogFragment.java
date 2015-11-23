@@ -24,6 +24,7 @@ import com.example.zhengyangchen.amnesia.util.OnNotifyDataSetChangedListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhengyangchen on 2015/10/26.
@@ -86,12 +87,18 @@ public class addMemoDialogFragment extends DialogFragment {
             memo.setDateStr(new Date().getTime());
             //像数据库中存入数据
             MemoDB.getInstance(getContext()).saveMemoByContentProider(memo);
-            mListener.notifyDataChangeListener(memo);
+            notiflyCardListDataChangeListener();
         } else {
             Toast.makeText(getActivity(),"不能保存一条空记录！",Toast.LENGTH_SHORT).show();
             return;
         }
 
+    }
+
+    private void notiflyCardListDataChangeListener() {
+        List<Memo> memoArrayList = MemoDB.getInstance(getContext()).loadMemo();
+        Memo memo = memoArrayList.get(memoArrayList.size()-1);
+        mListener.notifyDataChangeListener(memo);
     }
 
     private void initView() {
