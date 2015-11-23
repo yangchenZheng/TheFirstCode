@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *处理memo数据库操作
  * Created by zhengyangchen on 2015/10/25.
  */
 public class MemoDB {

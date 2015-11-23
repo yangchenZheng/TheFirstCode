@@ -35,6 +35,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 读取手机照片，选择照片的界面
+ */
 public class SelectPhotoActivity extends AppCompatActivity {
     private static final int COMPLETE_SCANNING = 0x11;
     /**
@@ -141,7 +144,7 @@ public class SelectPhotoActivity extends AppCompatActivity {
     private void initData() {
 
         mImageFolderList = new ArrayList<>();
-        //获取图片信息
+        //扫描手机图片
         getImages();
 
 

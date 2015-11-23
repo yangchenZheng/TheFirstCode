@@ -19,6 +19,7 @@ import org.json.JSONException;
 import java.util.List;
 
 /**
+ * 屏幕亮起，解锁时间广播接收器，用于启动 有百度语音功能的服务
  * Created by zhengyangchen on 2015/10/15.
  */
 public class LockScreenReceiver extends BroadcastReceiver {
@@ -32,6 +33,7 @@ public class LockScreenReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action.equals(Intent.ACTION_SCREEN_ON)) {
             Log.d(TAG, "屏幕亮起广播...");
+            //启动百度语音服务
             Intent intent1 = new Intent(context, SpeechService.class);
             intent1.putExtra("zyc", true);
             context.startService(intent1);

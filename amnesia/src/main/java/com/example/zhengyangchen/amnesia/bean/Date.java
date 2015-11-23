@@ -1,6 +1,7 @@
 package com.example.zhengyangchen.amnesia.bean;
 
 /**
+ * 时间实例
  * Created by zhengyangchen on 2015/11/4.
  */
 public class Date {

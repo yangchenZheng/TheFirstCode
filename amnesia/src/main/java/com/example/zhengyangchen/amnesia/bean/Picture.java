@@ -3,6 +3,7 @@ package com.example.zhengyangchen.amnesia.bean;
 import java.io.PipedReader;
 
 /**
+ * 图片实例，用于管理图片
  * Created by zhengyangchen on 2015/11/7.
  */
 public class Picture {

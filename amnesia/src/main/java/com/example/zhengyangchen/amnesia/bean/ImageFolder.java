@@ -1,5 +1,8 @@
 package com.example.zhengyangchen.amnesia.bean;
 
+/**
+ * 文件夹实例
+ */
 public class ImageFolder
 {
 	/**

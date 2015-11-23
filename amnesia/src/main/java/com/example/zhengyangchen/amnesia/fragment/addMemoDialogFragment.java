@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 快速编辑备忘事件的DialogFragment
  * Created by zhengyangchen on 2015/10/26.
  */
 public class addMemoDialogFragment extends DialogFragment {

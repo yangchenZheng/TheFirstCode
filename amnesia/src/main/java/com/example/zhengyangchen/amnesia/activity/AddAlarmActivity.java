@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import com.example.zhengyangchen.amnesia.R;
 
+/**
+ *添加闹钟界面的activity
+ */
 public class AddAlarmActivity extends AppCompatActivity {
 
     @Override

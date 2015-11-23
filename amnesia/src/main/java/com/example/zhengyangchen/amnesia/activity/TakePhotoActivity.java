@@ -38,6 +38,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 添加含有图片的备忘界面
+ * 小结：
  * 用于显示添加图片事件的按钮
  * <p/>
  * 出现的问题：地址BitmapFactory.decodeFile()方法一直获取不到图片，
@@ -79,6 +81,9 @@ public class TakePhotoActivity extends AppCompatActivity {
      * 存储添加按钮的图片，防止多次存储
      */
     private SharedPreferences.Editor mPrefEditor;
+    /**
+     * 照相机拍摄产生的图片地址
+     */
     private String mPath;
 
     @Override
@@ -125,7 +130,7 @@ public class TakePhotoActivity extends AppCompatActivity {
         //初始化GridView
         initGridView();
         mContentEdt = (EditText) findViewById(R.id.take_photo_edt);
-        //初始化popupWindow
+        //初始化popupWindow，用于弹出获取图片的方式：拍照，相册
         initPopupWindow();
     }
 
@@ -151,7 +156,7 @@ public class TakePhotoActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //长按删除图片
         mNoScrollGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

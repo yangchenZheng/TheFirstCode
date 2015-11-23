@@ -1,6 +1,7 @@
 package com.example.zhengyangchen.amnesia.bean;
 
 /**
+ *
  * Created by zhengyangchen on 2015/10/24.
  */
 public class MemoTree {

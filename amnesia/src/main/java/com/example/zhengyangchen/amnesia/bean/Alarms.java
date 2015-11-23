@@ -1,6 +1,7 @@
 package com.example.zhengyangchen.amnesia.bean;
 
 /**
+ * 闹钟实例
  * Created by zhengyangchen on 2015/10/28.
  */
 public class Alarms {

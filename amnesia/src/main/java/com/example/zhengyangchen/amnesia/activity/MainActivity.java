@@ -26,13 +26,15 @@ import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
+/**
+ * 程序的主界面
+ */
 public class MainActivity extends AppCompatActivity implements MaterialTabListener,OnNotifyDataSetChangedListener {
-    //tab标题
-    private String[] titles = {"闹钟", "备忘", "日历", "我"};
+//    //tab标题
+//    private String[] titles = {"闹钟", "备忘", "日历", "我"};
     //fragment的集合
     private List<Fragment> fragmentList;
     private MaterialTabHost materialTabHost;
-    private ViewPagerAdapter viewPagerAdapter;
     private Resources res;
     private ViewPager viewPager;
     private CalendarFragment mCalendarFragment;
@@ -52,11 +54,12 @@ public class MainActivity extends AppCompatActivity implements MaterialTabListen
         //TabLayout tabLayout = (TabLayout) findViewById(R.id.id_TabLayout);
         materialTabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         viewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         //将fragment添加集合中去
         addFragmentToFragmentList();
 
         viewPager.setAdapter(viewPagerAdapter);
+        //viewPager界面切换的监听器
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
